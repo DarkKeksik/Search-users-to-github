@@ -1,0 +1,12 @@
+// @TODO Supplement later
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "pretty": true,
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "allowSyntheticDefaultImports": true
+  }
+}
