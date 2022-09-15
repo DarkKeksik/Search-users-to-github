@@ -1,16 +1,19 @@
-import React, {useState, useId} from 'react'
+import React, {useState, useId, useEffect} from 'react'
+import { useDebounce } from '../../utils/hooks'
 import * as Styled from './Input.styled'
+import { Props } from './types';
 
-type Props = {
-  labelText?: string
-  idCustom?: string
-  placeholderCustom?: string
-}
-
-// @TODO use debouncing, later (useDeferredValue)
-const Input: React.FC<Props> = ({labelText, idCustom, placeholderCustom}) => {
+const InputSearch: React.FC<Props> = ({labelText, idCustom, placeholderCustom}) => {
   const [value, setValue] = useState<string>('')
+  const [, setUsers] = useState([])
+  const valueDebounced = useDebounce(value, 500)
   const inputId = useId()
+
+  useEffect(() => {
+    fetch('')
+      .then(res => res.json())
+      .then(setUsers)
+  }, [valueDebounced])
 
   return (
     <Styled.Wrap>
@@ -26,4 +29,4 @@ const Input: React.FC<Props> = ({labelText, idCustom, placeholderCustom}) => {
   )
 }
 
-export default Input
+export default InputSearch
