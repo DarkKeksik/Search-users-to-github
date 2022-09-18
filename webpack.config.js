@@ -64,7 +64,13 @@ module.exports = {
     path: path.resolve(__dirname, './dist')
   },
   resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.jsx']
+    extensions: ['.js', '.ts', '.tsx', '.jsx'],
+    // @TODO Add next time (and tsconfig.json)
+    // alias: {
+    //   '@Components': '/src/Components',
+    //   '@Layouts': '/utils',
+    //   '@utils': '/utils'
+    // }
   },
   plugins: getPlugins(isDev),
   module: {

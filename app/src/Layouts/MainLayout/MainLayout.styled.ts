@@ -1,11 +1,12 @@
 import styled from 'styled-components'
 
-export const Wrap1024 = styled.div`
+export const MainLayout = styled.div`
+  display: grid;
+  grid-template-columns: minmax(320px, .8fr ) 1.2fr;
   max-width: 1024px;
   width: 100%;
   margin: 0 auto;
-  padding: 1.5rem 1rem;
   min-height: 100vh;
-  background: #fafafa;
+  background: #feebfe;
   box-sizing: border-box;
 `

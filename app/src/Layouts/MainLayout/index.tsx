@@ -2,7 +2,9 @@ import React, { PropsWithChildren } from 'react'
 import * as Styled from './MainLayout.styled'
 
 const MainLayout: React.FC<PropsWithChildren> = ({ children }) => (
-  <Styled.Wrap1024>{ children }</Styled.Wrap1024>
+  <Styled.MainLayout>
+    { children }
+  </Styled.MainLayout>
 )
 
 export default MainLayout
