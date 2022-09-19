@@ -1,13 +1,13 @@
 import React from 'react'
 
-import { UsersSearch, Users } from '../'
+import { UsersSearch, UsersCards } from '../'
 import * as Styled from './UsersSection.styled'
 
 const UsersSection = () => {
   return (
     <Styled.UsersSection>
       <UsersSearch />
-      <Users />
+      <UsersCards />
     </Styled.UsersSection>
   )
 }

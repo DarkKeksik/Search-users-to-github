@@ -21,12 +21,18 @@ const Input: React.FC<Props> = (
       anySideEffects,
       timeoutDebounce = 500,
       inputType,
-      labelStyled
+      labelStyled,
+      defaultValue
     }
 ) => {
-  const [value, setValue] = useState<string>('')
+  const [value, setValue] = useState<string>(defaultValue)
   const valueDebounced = useDebounce(value, timeoutDebounce)
   const inputId = useId()
+
+  // @TODO *** need bugfix, after reloading the page cleans localStorage ***
+  useEffect(() => {
+    defaultValue && setValue(defaultValue)
+  }, [defaultValue])
 
   useEffect(() => {
     anySideEffects && anySideEffects(valueDebounced)

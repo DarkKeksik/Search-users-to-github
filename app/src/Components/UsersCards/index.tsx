@@ -15,8 +15,8 @@ const Users = () => {
   // @TODO any
   return (
     <Styled.Users>
-      {users.map((user: any) => (
-        <Card />
+      {users.map(({name}: any) => (
+        <Card name={name} />
       ))}
     </Styled.Users>
   )

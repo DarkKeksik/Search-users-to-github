@@ -6,4 +6,5 @@ export type Props = {
   timeoutDebounce?: number
   inputType?: string
   labelStyled?: {[key: string]: string}
+  defaultValue?: string
 }
