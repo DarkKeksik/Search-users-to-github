@@ -1,5 +1,6 @@
-import React, {useCallback} from 'react'
+import React, {useCallback, useMemo} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
+import { Octokit } from '@octokit/rest'
 
 import { Input } from '../'
 import { setUsersToolkit, setTokenToolkit } from '../../toolkitRedux/reducers/externalApi'
@@ -9,11 +10,18 @@ const SearchUsers = () => {
   const dispatch = useDispatch()
   const accessToken: string = useSelector(({ reducerExternalApi: {accessToken} }) => accessToken)
 
-  // @ TODO need catch errors
-  const setUsers = useCallback((value: string) => {
-    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${value}&${accessToken}`)
-      .then(res => res.json())
-      .then((data) => dispatch(setUsersToolkit(data)))
+  const octokit = useMemo(() => (
+    new Octokit({
+      auth: accessToken
+    })
+  ), [accessToken])
+
+
+  // @ TODO need catch errors and utils for octokit
+  const setUsers = useCallback(async (value: string) => {
+    await octokit.request('GET /users', {
+      username: value
+    }).then((data) => dispatch(setUsersToolkit(data)))
   }, [])
 
   const setToken = useCallback((value: string) => {

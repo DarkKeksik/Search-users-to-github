@@ -10,11 +10,14 @@ export const Card = styled.div`
   align-items: center;
 `
 
-export const Avatar = styled.div`
+export const Avatar = styled.div<{src?: string}>`
   height: 60px;
   width: 60px;
-  background: #49494936;
   border-radius: 100%;
+  background: #49494936 url(
+    ${({src}) => src}
+  ) no-repeat;
+  background-size: cover;
 `
 
 export const Name = styled.p``
