@@ -1,21 +1,17 @@
-import React, {useCallback, useEffect} from 'react'
+import React, {useCallback} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
 import { Input } from '../'
 import { setUsersToolkit, setTokenToolkit } from '../../toolkitRedux/reducers/externalApi'
 
+
 const SearchUsers = () => {
   const dispatch = useDispatch()
   const accessToken: string = useSelector(({ reducerExternalApi: {accessToken} }) => accessToken)
 
-  useEffect(() => {
-    const token = window.localStorage.getItem('accessToken')
-    dispatch(setTokenToolkit(token))
-  }, [])
-
   // @ TODO need catch errors
   const setUsers = useCallback((value: string) => {
-    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${value}`)
+    fetch(`https://jsonplaceholder.typicode.com/comments?postId=${value}&${accessToken}`)
       .then(res => res.json())
       .then((data) => dispatch(setUsersToolkit(data)))
   }, [])
@@ -25,8 +21,6 @@ const SearchUsers = () => {
     dispatch(setTokenToolkit(value))
   }, [])
 
-
-  // @TODO next time, instead labelColor (ThemeProvider)
   return (
     <>
       <Input

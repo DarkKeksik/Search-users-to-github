@@ -11,6 +11,7 @@ import { Props } from './types'
  * @param debounceTimeout   - Timeout for debounce
  * @param inputType         - Attr type for input
  * @param labelStyled       - Custom styles for label
+ * @param defaultValue      - Just default value for input
  * */
 
 const Input: React.FC<Props> = (
@@ -29,13 +30,15 @@ const Input: React.FC<Props> = (
   const valueDebounced = useDebounce(value, timeoutDebounce)
   const inputId = useId()
 
-  // @TODO *** need bugfix, after reloading the page cleans localStorage ***
   useEffect(() => {
-    defaultValue && setValue(defaultValue)
-  }, [defaultValue])
+    setValue(defaultValue)
+  }, [])
 
   useEffect(() => {
-    anySideEffects && anySideEffects(valueDebounced)
+    // @TODO empty string will break updating. It's feature! (but need fix)
+    if (valueDebounced && anySideEffects) {
+      anySideEffects(valueDebounced)
+    }
   }, [valueDebounced])
 
   return (

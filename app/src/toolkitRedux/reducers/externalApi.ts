@@ -7,7 +7,7 @@ type TypeInitialState = {
 
 const initialState: TypeInitialState = {
   users: [],
-  accessToken: ''
+  accessToken: window.localStorage.getItem('accessToken')
 }
 
 const reducerExternalApi = createSlice({
