@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { getAccessTokenLS } from '../../utils/localstorage'
 
 type TypeInitialState = {
   users: Array<any>
@@ -7,7 +8,7 @@ type TypeInitialState = {
 
 const initialState: TypeInitialState = {
   users: [],
-  accessToken: window.localStorage.getItem('accessToken')
+  accessToken: getAccessTokenLS
 }
 
 const reducerExternalApi = createSlice({

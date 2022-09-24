@@ -1,31 +1,23 @@
-import React, {useCallback, useMemo} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import { Octokit } from '@octokit/rest'
+import React, { useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { OctokitWithConfig } from '../../utils/oktokit'
 
-import { Input } from '../'
 import { setUsersToolkit, setTokenToolkit } from '../../toolkitRedux/reducers/externalApi'
-
+import { setAccessTokenLS } from '../../utils/localstorage'
+import { Input } from '../'
 
 const SearchUsers = () => {
   const dispatch = useDispatch()
   const accessToken: string = useSelector(({ reducerExternalApi: {accessToken} }) => accessToken)
 
-  const octokit = useMemo(() => (
-    new Octokit({
-      auth: accessToken
-    })
-  ), [accessToken])
-
-
-  // @ TODO need catch errors and utils for octokit
   const setUsers = useCallback(async (value: string) => {
-    await octokit.request('GET /users', {
+    await OctokitWithConfig(accessToken).request('GET /users', {
       username: value
     }).then((data) => dispatch(setUsersToolkit(data)))
-  }, [])
+  }, [accessToken])
 
   const setToken = useCallback((value: string) => {
-    window.localStorage.setItem('accessToken', value)
+    setAccessTokenLS(value)
     dispatch(setTokenToolkit(value))
   }, [])
 
