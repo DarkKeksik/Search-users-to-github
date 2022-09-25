@@ -7,8 +7,8 @@ const EmptyUsers = () => {
 
   return (
     <Styled.EmptyUsers>
-      Try looking for other users, but first
-      <Styled.Bold>you must set github access token for query!</Styled.Bold>
+      Try looking for other users.
+      <Styled.Bold>You can set github access token for query</Styled.Bold>
       <Styled.Link target='_blank' href={link}>Guide here</Styled.Link>
     </Styled.EmptyUsers>
   )

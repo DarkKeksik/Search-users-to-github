@@ -8,13 +8,14 @@ import * as Styled from './UserCard.styled'
 
 const Users = () => {
   const users: Array<githubUserProps> = useSelector((
-    { reducerExternalApi: {users: {data}} }) => data || []
+    { reducerExternalApi: {users: {items}} }) => items || []
   )
 
   if (!users.length) {
     return <EmptyUsers />
   }
 
+  // @TODO need preloader
   return (
     <Styled.Users>
       {users.map(({login, node_id, avatar_url}) => (

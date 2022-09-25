@@ -1,7 +1,9 @@
-import React, {useState, useId, useEffect} from 'react'
+import React, { useState, useId, useEffect } from 'react'
+
 import { useDebounce } from '../../utils/hooks'
-import * as Styled from './Input.styled'
+import { isDefined } from '../../utils/commons'
 import { Props } from './types'
+import * as Styled from './Input.styled'
 
 /**
  * @param labelText         - Adding a label
@@ -34,9 +36,9 @@ const Input: React.FC<Props> = (
     setValue(defaultValue)
   }, [])
 
+  // Without first rendering
   useEffect(() => {
-    // @TODO empty string will break updating. It's feature! (but need fix)
-    if (valueDebounced && anySideEffects) {
+    if (isDefined(valueDebounced) && anySideEffects) {
       anySideEffects(valueDebounced)
     }
   }, [valueDebounced])

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { OctokitWithConfig } from '../../utils/oktokit'
 
+import { OctokitWithConfig } from '../../utils/oktokit'
 import { setUsersToolkit, setTokenToolkit } from '../../toolkitRedux/reducers/externalApi'
 import { setAccessTokenLS } from '../../utils/localstorage'
 import { Input } from '../'
@@ -11,9 +11,18 @@ const SearchUsers = () => {
   const accessToken: string = useSelector(({ reducerExternalApi: {accessToken} }) => accessToken)
 
   const setUsers = useCallback(async (value: string) => {
-    await OctokitWithConfig(accessToken).request('GET /users', {
-      username: value
-    }).then((data) => dispatch(setUsersToolkit(data)))
+    if ( !value ) {
+      dispatch(setUsersToolkit([]))
+      return
+    }
+
+    const usersGithub = await OctokitWithConfig(accessToken).request("GET /search/users", {
+      page: 1,
+      per_page: 5,
+      q: value
+    })
+
+    dispatch(setUsersToolkit(usersGithub.data))
   }, [accessToken])
 
   const setToken = useCallback((value: string) => {
@@ -36,7 +45,7 @@ const SearchUsers = () => {
         }
       />
       <Input
-        placeholderCustom='Your github access token *'
+        placeholderCustom='Your github access token'
         anySideEffects={setToken}
         defaultValue={accessToken}
       />
