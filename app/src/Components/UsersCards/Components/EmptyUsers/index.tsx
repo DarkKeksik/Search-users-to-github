@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 import * as Styled from './EmptyUsers.styled'
 
 // @TODO here animation
-const EmptyUsers = () => {
+const EmptyUsers: FC = () => {
   const link = 'https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token'
 
   return (

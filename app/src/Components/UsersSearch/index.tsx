@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { FC, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { OctokitWithConfig } from '../../utils/oktokit'
@@ -6,9 +6,19 @@ import { setUsersToolkit, setTokenToolkit } from '../../toolkitRedux/reducers/ex
 import { setAccessTokenLS } from '../../utils/localstorage'
 import { Input } from '../'
 
-const SearchUsers = () => {
+const SearchUsers: FC = () => {
   const dispatch = useDispatch()
   const accessToken: string = useSelector(({ reducerExternalApi: {accessToken} }) => accessToken)
+
+  // @TODO It is necessary to take out type
+  const [currentPage, stepRange]: [currentPage: number, stepRange: number] = useSelector((
+    {reducerExternalApi: {
+      usersPaginationData: {
+        currentPage, stepRange
+      }
+    }}
+    ) => [currentPage, stepRange]
+  )
 
   const setUsers = useCallback(async (value: string) => {
     if ( !value ) {
@@ -17,8 +27,8 @@ const SearchUsers = () => {
     }
 
     const usersGithub = await OctokitWithConfig(accessToken).request("GET /search/users", {
-      page: 1,
-      per_page: 5,
+      page: currentPage,
+      per_page: stepRange,
       q: value
     })
 

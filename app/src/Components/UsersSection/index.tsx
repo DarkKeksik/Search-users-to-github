@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 import { UsersSearch, UsersCards } from '../'
 import * as Styled from './UsersSection.styled'
 
-const UsersSection = () => {
+const UsersSection: FC = () => {
   return (
     <Styled.UsersSection>
       <UsersSearch />

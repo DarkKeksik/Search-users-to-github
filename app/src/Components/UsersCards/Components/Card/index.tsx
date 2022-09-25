@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { FC } from 'react'
 
-import { githubUserProps } from '../../types'
+import { GithubUserProps } from '../../types'
 import * as Styled from './Card.styled'
 
-const Card = ({name, avatarUrl}: githubUserProps) => (
+const Card: FC<GithubUserProps> = ({name, avatarUrl}) => (
   <Styled.Card>
     <Styled.Avatar src={avatarUrl} />
     <Styled.Name>{name}</Styled.Name>

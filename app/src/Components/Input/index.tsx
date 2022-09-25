@@ -1,4 +1,4 @@
-import React, { useState, useId, useEffect } from 'react'
+import React, { FC, useState, useId, useEffect } from 'react'
 
 import { useDebounce } from '../../utils/hooks'
 import { isDefined } from '../../utils/commons'
@@ -16,7 +16,7 @@ import * as Styled from './Input.styled'
  * @param defaultValue      - Just default value for input
  * */
 
-const Input: React.FC<Props> = (
+const Input: FC<Props> = (
     {
       labelText,
       idCustom,
