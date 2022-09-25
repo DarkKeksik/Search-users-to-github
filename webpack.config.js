@@ -23,7 +23,7 @@ const babelLoaderConfig = presets => {
   return config;
 }
 
-const getPlugins = isDev => {
+const getPlugins = isProd => {
   let plugins = [
     new HTMLWebpackPlugin({
       template: './static/index.html',
@@ -48,7 +48,7 @@ const getPlugins = isDev => {
     })
   ]
 
-  if (isDev) plugins.push(new BundleAnalyzerPlugin())
+  if (isProd) plugins.push(new BundleAnalyzerPlugin())
 
   return plugins
 }
@@ -72,7 +72,7 @@ module.exports = {
     //   '@utils': '/utils'
     // }
   },
-  plugins: getPlugins(isDev),
+  plugins: getPlugins(isProd),
   module: {
     rules: [
       {
