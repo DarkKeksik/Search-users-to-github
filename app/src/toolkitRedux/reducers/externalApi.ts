@@ -3,6 +3,7 @@ import { getAccessTokenLS } from '../../utils/localstorage'
 import { InitialStateProps } from '../types/externalApiTypes'
 
 const initialState: InitialStateProps = {
+  searchLogin: '',
   users: [],
   usersPaginationData: {
     currentPage: 1,
@@ -16,6 +17,9 @@ const reducerExternalApi = createSlice({
   name: 'externalApiReducer',
   initialState,
   reducers: {
+    setLoginSearch(state, action) {
+      state.searchLogin = action.payload
+    },
     setUsersToolkit(state, action) {
       state.users = action.payload
     },
@@ -35,5 +39,6 @@ export default reducerExternalApi.reducer
 
 export const {
   setUsersToolkit, setTokenToolkit,
-  setPaginationCurrentPage, setPaginationTotalPages
+  setPaginationCurrentPage, setPaginationTotalPages,
+  setLoginSearch
 } = reducerExternalApi.actions

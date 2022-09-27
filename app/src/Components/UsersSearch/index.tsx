@@ -1,8 +1,13 @@
-import React, { FC, useCallback } from 'react'
+import React, {FC, useCallback} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { OctokitWithConfig } from '../../utils/oktokit'
-import { setUsersToolkit, setTokenToolkit } from '../../toolkitRedux/reducers/externalApi'
+import { getUsersOctokit } from '../../utils/oktokit'
+import {
+  setUsersToolkit,
+  setTokenToolkit,
+  setLoginSearch,
+  setPaginationCurrentPage
+} from '../../toolkitRedux/reducers/externalApi'
 import { setAccessTokenLS } from '../../utils/localstorage'
 import { Input } from '../'
 
@@ -13,12 +18,19 @@ const SearchUsers: FC = () => {
   // @TODO It is necessary to take out type
   const [currentPage, stepRange]: [currentPage: number, stepRange: number] = useSelector((
     {reducerExternalApi: {
+      searchLogin,
       usersPaginationData: {
-        currentPage, stepRange
+        currentPage,
+        stepRange
       }
     }}
     ) => [currentPage, stepRange]
   )
+
+  // useEffect(() => {
+  //   /** - Zeroing the currentPage for last results */
+  //   dispatch(setPaginationCurrentPage(1))
+  // }, [currentPage])
 
   const setUsers = useCallback(async (value: string) => {
     if ( !value ) {
@@ -26,12 +38,17 @@ const SearchUsers: FC = () => {
       return
     }
 
-    const usersGithub = await OctokitWithConfig(accessToken).request("GET /search/users", {
-      page: currentPage,
-      per_page: stepRange,
-      q: value
-    })
+    const usersGithub = await getUsersOctokit(
+      {page: currentPage, per_page: stepRange, q: value},
+      accessToken
+    )
 
+    /**
+     * - Write in redux login from input
+     * - Users from GitHub api
+     * */
+    dispatch(setLoginSearch(value))
+    dispatch(setPaginationCurrentPage(1))
     dispatch(setUsersToolkit(usersGithub.data))
   }, [accessToken])
 

@@ -7,6 +7,7 @@ export type PaginationDataProps = {
 }
 
 export type InitialStateProps = {
+  searchLogin?: string
   users: Array<any>
   accessToken: string
 } & PaginationDataProps
