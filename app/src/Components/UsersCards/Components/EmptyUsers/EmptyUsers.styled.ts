@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 
 export const EmptyUsers = styled.div`
   flex: 1;
@@ -16,7 +16,11 @@ export const Bold = styled.b`
   color: #c7549c;
 `
 
-export const Link = styled.a`
+export const Link = styled.a<{marginTop?: string}>`
   font-weight: 700;
   color: #242424;
+  
+  ${( props ) => props.marginTop && css`
+    margin-top: ${props.marginTop}
+  `};
 `

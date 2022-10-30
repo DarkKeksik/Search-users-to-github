@@ -49,8 +49,8 @@ const Users: FC = () => {
   return (
     <>
       <Styled.Users>
-        {users.map(({login, node_id, avatar_url}) => (
-          <Card key={node_id} name={login} avatarUrl={avatar_url} />
+        {users.map(({login, node_id, avatar_url, html_url}) => (
+          <Card key={node_id} name={login} avatarUrl={avatar_url} html_url={html_url} />
         ))}
       </Styled.Users>
 

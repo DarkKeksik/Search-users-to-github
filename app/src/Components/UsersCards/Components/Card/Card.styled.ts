@@ -22,14 +22,16 @@ export const Avatar = styled.div<{src?: string}>`
 
 export const Name = styled.p``
 
-export const Button = styled.button`
+export const Button = styled.a`
   padding: 0.4rem 0.2rem;
   border-radius: 0.275rem;
   border: 2px solid ${bgButton};
   background: ${bgButton};
   transition-duration: ${animTime};
+  text-align: center;
   color: white;
   cursor: pointer;
+  text-decoration: none;
   
   &:hover {
     background: inherit;

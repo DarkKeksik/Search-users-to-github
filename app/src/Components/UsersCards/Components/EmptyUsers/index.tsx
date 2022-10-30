@@ -8,8 +8,11 @@ const EmptyUsers: FC = () => {
   return (
     <Styled.EmptyUsers>
       Try looking for other users.
-      <Styled.Bold>You can set github access token for query</Styled.Bold>
-      <Styled.Link target='_blank' href={link}>Guide here</Styled.Link>
+      <Styled.Bold>
+        Without token, you can get no more than 1000 users! <br />
+        You can set github access token for full query.
+      </Styled.Bold>
+      <Styled.Link marginTop={'.5rem'} target='_blank' href={link}>Guide here</Styled.Link>
     </Styled.EmptyUsers>
   )
 }
