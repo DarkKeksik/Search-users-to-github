@@ -17,6 +17,10 @@ const Pagination: FC<PaginationProps> = ({ totalElements, currentPage, stepRange
         return [currentPage, currentPage + 1, currentPage + 2]
       case 3:
         return [currentPage - 1 , currentPage, currentPage + 1, currentPage + 2]
+      case totalPages - 1:
+        return [currentPage - 2, currentPage - 1, currentPage]
+      case totalPages - 2:
+        return [currentPage - 2, currentPage - 1, currentPage, currentPage + 1]
       case totalPages:
         return [currentPage - 2, currentPage - 1, currentPage]
       default:
