@@ -4,15 +4,13 @@ import { PaginationProps } from './types'
 import * as Styled from './Pagination.styled'
 
 const Pagination: FC<PaginationProps> = ({ totalElements, currentPage, stepRange, onChangePageCustom }) => {
-  const totalPages = useMemo<number>(() => {
-    return Math.ceil(totalElements / stepRange)
-  }, [ totalElements, stepRange ])
+  const totalPages = useMemo<number>(() => Math.ceil(totalElements / stepRange), [totalElements, stepRange])
 
   // @TODO need to simplify
   const listOfPages = useMemo(() => {
     switch (currentPage) {
       case 1:
-        return [currentPage + 1, currentPage + 2, currentPage + 3]
+        return [currentPage, currentPage + 1, currentPage + 2]
       case 2:
         return [currentPage, currentPage + 1, currentPage + 2]
       case 3:
@@ -30,19 +28,18 @@ const Pagination: FC<PaginationProps> = ({ totalElements, currentPage, stepRange
 
   return (
     <Styled.Pagination>
-      {currentPage !== 1 && (
-        <Styled.PageFirst onClick={() => {
-          onChangePageCustom(1)
-        }}>1</Styled.PageFirst>
-      )}
+      {currentPage !== 1 && <Styled.PageFirst onClick={() => {onChangePageCustom(1)}}>1</Styled.PageFirst>}
 
       <Styled.PagesWrap>
         {listOfPages.map((pageNumber) => (
-            <Styled.PageItem isActive={pageNumber === currentPage} key={pageNumber} onClick={() => onChangePageCustom(pageNumber)}>
-              { pageNumber }
-            </Styled.PageItem>
-          )
-        )}
+          <Styled.PageItem
+            isActive={pageNumber === currentPage}
+            key={pageNumber}
+            onClick={() => onChangePageCustom(pageNumber)}
+          >
+            { pageNumber }
+          </Styled.PageItem>
+        ))}
       </Styled.PagesWrap>
 
       {currentPage !== totalPages && (

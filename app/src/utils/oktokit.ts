@@ -14,6 +14,6 @@ export const OctokitWithConfig = (accessToken?: string) => {
   })
 }
 
-export const getUsersOctokit = (params: GetUsersOctokitParamsProps, accessToken?: string, ) => {
-   return OctokitWithConfig(accessToken).request("GET /search/users", {...params})
+export const getUsersOctokit = (params: GetUsersOctokitParamsProps, accessToken?: string) => {
+  return OctokitWithConfig(accessToken).request("GET /search/users", {...params})
 }

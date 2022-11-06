@@ -4,4 +4,5 @@ export const Users = styled.section`
   display: flex;
   gap: 1rem;
   flex-direction: column;
+  position: relative;
 `

@@ -15,41 +15,32 @@ const SearchUsers: FC = () => {
   const dispatch = useDispatch()
   const accessToken: string = useSelector(({ reducerExternalApi: {accessToken} }) => accessToken)
 
-  // @TODO It is necessary to take out type
-  const [currentPage, stepRange]: [currentPage: number, stepRange: number] = useSelector((
-    {reducerExternalApi: {
+  type PropsStore =  [
+    currentPage: number,
+    stepRange: number,
+  ]
+
+  const [currentPage, stepRange]: PropsStore = useSelector(({
+    reducerExternalApi: {
       searchLogin,
       usersPaginationData: {
         currentPage,
         stepRange
-      }
-    }}
-    ) => [currentPage, stepRange]
+      },
+      errorGithub
+    }}) => [currentPage, stepRange]
   )
 
-  // useEffect(() => {
-  //   /** - Zeroing the currentPage for last results */
-  //   dispatch(setPaginationCurrentPage(1))
-  // }, [currentPage])
-
   const setUsers = useCallback(async (value: string) => {
-    if ( !value ) {
+    if (!value) {
       dispatch(setUsersToolkit([]))
       return
     }
 
-    const usersGithub = await getUsersOctokit(
-      {page: currentPage, per_page: stepRange, q: value},
-      accessToken
-    )
-
-    /**
-     * - Write in redux login from input
-     * - Users from GitHub api
-     * */
     dispatch(setLoginSearch(value))
-    dispatch(setPaginationCurrentPage(1))
-    dispatch(setUsersToolkit(usersGithub.data))
+    dispatch(setPaginationCurrentPage(currentPage))
+    await getUsersOctokit({page: currentPage, per_page: stepRange, q: value}, accessToken)
+      .then(usersGithub => dispatch(setUsersToolkit(usersGithub.data)))
   }, [accessToken])
 
   const setToken = useCallback((value: string) => {

@@ -16,18 +16,16 @@ import * as Styled from './Input.styled'
  * @param defaultValue      - Just default value for input
  * */
 
-const Input: FC<Props> = (
-    {
-      labelText,
-      idCustom,
-      placeholderCustom,
-      anySideEffects,
-      timeoutDebounce = 500,
-      inputType,
-      labelStyled,
-      defaultValue
-    }
-) => {
+const Input: FC<Props> = ({
+    labelText,
+    idCustom,
+    placeholderCustom,
+    anySideEffects,
+    timeoutDebounce = 500,
+    inputType,
+    labelStyled,
+    defaultValue
+  }) => {
   const [value, setValue] = useState<string>(defaultValue)
   const valueDebounced = useDebounce(value, timeoutDebounce)
   const inputId = useId()

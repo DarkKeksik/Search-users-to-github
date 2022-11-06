@@ -14,6 +14,7 @@ const stylesPageItem = css`
   border: 2px solid #575757;
   cursor: pointer;
   font-weight: 700;
+  user-select: none;
   transition-duration: .3s;
   
   &:hover {
@@ -39,6 +40,7 @@ export const PagesWrap = styled.div`
 export const PageItem = styled.a<{isActive?: boolean}>`
   ${ stylesPageItem };
   ${({isActive}) => isActive && css`
+    border: 2px solid #ffffff00;
     box-shadow: inset 1px 0 3px #575757;
     background: none;
   `}  

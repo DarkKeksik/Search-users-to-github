@@ -10,4 +10,5 @@ export type InitialStateProps = {
   searchLogin?: string
   users: Array<any>
   accessToken: string
+  errorGithub: {[key: string]: string} | null
 } & PaginationDataProps

@@ -10,7 +10,8 @@ const initialState: InitialStateProps = {
     stepRange: 5,
     totalPages: null
   },
-  accessToken: getAccessTokenLS
+  accessToken: getAccessTokenLS,
+  errorGithub: null
 }
 
 const reducerExternalApi = createSlice({
@@ -22,6 +23,7 @@ const reducerExternalApi = createSlice({
     },
     setUsersToolkit(state, action) {
       state.users = action.payload
+      state.errorGithub = null
     },
     setTokenToolkit(state, action) {
       state.accessToken = action.payload
@@ -29,8 +31,8 @@ const reducerExternalApi = createSlice({
     setPaginationCurrentPage(state, action) {
       state.usersPaginationData.currentPage = action.payload
     },
-    setPaginationTotalPages(state, action) {
-      state.usersPaginationData.totalPages = action.payload
+    setErrorGithub(state, action) {
+      state.errorGithub = action.payload
     }
   }
 })
@@ -38,7 +40,9 @@ const reducerExternalApi = createSlice({
 export default reducerExternalApi.reducer
 
 export const {
-  setUsersToolkit, setTokenToolkit,
-  setPaginationCurrentPage, setPaginationTotalPages,
-  setLoginSearch
+  setUsersToolkit,
+  setTokenToolkit,
+  setPaginationCurrentPage,
+  setLoginSearch,
+  setErrorGithub
 } = reducerExternalApi.actions

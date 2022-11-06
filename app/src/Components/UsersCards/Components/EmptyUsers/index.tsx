@@ -7,12 +7,14 @@ const EmptyUsers: FC = () => {
 
   return (
     <Styled.EmptyUsers>
-      Try looking for other users.
+      <Styled.Title>
+        Try looking for other users.
+      </Styled.Title>
       <Styled.Bold>
-        Without token, you can get no more than 1000 users! <br />
+        Without a token, you will be able to make fewer requests per minute!
         You can set github access token for full query.
       </Styled.Bold>
-      <Styled.Link marginTop={'.5rem'} target='_blank' href={link}>Guide here</Styled.Link>
+      <Styled.Link marginTop={'.3rem'} target='_blank' href={link}>Guide here</Styled.Link>
     </Styled.EmptyUsers>
   )
 }
