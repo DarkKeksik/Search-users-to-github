@@ -32,9 +32,7 @@ const Users: FC = () => {
 
   const setUsersForCurrentPage = useCallback(async (currentPage: number) => {
     await getUsersOctokit({ page: currentPage, per_page: stepRange, q: searchLogin })
-      .then(usersGithub => {
-        dispatch(setUsersToolkit(usersGithub.data))
-      })
+      .then(usersGithub => dispatch(setUsersToolkit(usersGithub.data)))
       .catch(errorData => dispatch(setErrorGithub(errorData)))
   }, [searchLogin, currentPage])
 
@@ -62,7 +60,7 @@ const Users: FC = () => {
           totalElements={total_count}
           currentPage={currentPage}
           stepRange={stepRange}
-          onChangePageCustom={onChangePage}
+          onChangePage={onChangePage}
         />
       }
     </>

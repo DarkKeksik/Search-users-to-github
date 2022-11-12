@@ -1,49 +1,56 @@
-import React, { FC, useMemo } from 'react'
+import React, {FC, useEffect, useMemo, useState} from 'react'
 
 import { PaginationProps } from './types'
 import * as Styled from './Pagination.styled'
+import { useDebounce } from "../../utils/hooks";
 
-const Pagination: FC<PaginationProps> = ({ totalElements, currentPage, stepRange, onChangePageCustom }) => {
+const Pagination: FC<PaginationProps> = ({ totalElements, currentPage, stepRange, onChangePage }) => {
   const totalPages = useMemo<number>(() => Math.ceil(totalElements / stepRange), [totalElements, stepRange])
+  const [pageActive, setPageActive] = useState(currentPage)
+  const pageActiveDebounce = useDebounce(pageActive, 300)
 
-  // @TODO need to simplify
-  const listOfPages = useMemo(() => {
-    switch (currentPage) {
+  const getPagesList: Array<number> = useMemo(() => {
+    switch (pageActive) {
       case 1:
-        return [currentPage, currentPage + 1, currentPage + 2]
+        return [pageActive, pageActive + 1, pageActive + 2]
       case 2:
-        return [currentPage, currentPage + 1, currentPage + 2]
+        return [pageActive, pageActive + 1, pageActive + 2]
       case 3:
-        return [currentPage - 1 , currentPage, currentPage + 1, currentPage + 2]
+        return [pageActive - 1 , pageActive, pageActive + 1, pageActive + 2]
       case totalPages - 1:
-        return [currentPage - 2, currentPage - 1, currentPage]
+        return [pageActive - 2, pageActive - 1, pageActive]
       case totalPages - 2:
-        return [currentPage - 2, currentPage - 1, currentPage, currentPage + 1]
+        return [pageActive - 2, pageActive - 1, pageActive, pageActive + 1]
       case totalPages:
-        return [currentPage - 2, currentPage - 1, currentPage]
+        return [pageActive - 2, pageActive - 1, pageActive]
       default:
-        return [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2]
+        return [pageActive - 2, pageActive - 1, pageActive, pageActive + 1, pageActive + 2]
     }
-  }, [currentPage, totalElements, stepRange])
+  }, [pageActive, totalElements, stepRange])
+
+  // Dispatch from parent a current page with debounce
+  useEffect(() => {
+    onChangePage(pageActive)
+  }, [pageActiveDebounce])
 
   return (
     <Styled.Pagination>
-      {currentPage !== 1 && <Styled.PageFirst onClick={() => {onChangePageCustom(1)}}>1</Styled.PageFirst>}
+      {pageActive !== 1 && <Styled.PageFirst onClick={() => setPageActive(1)}>1</Styled.PageFirst>}
 
       <Styled.PagesWrap>
-        {listOfPages.map((pageNumber) => (
+        {getPagesList.map((pageNumber) => (
           <Styled.PageItem
-            isActive={pageNumber === currentPage}
+            isActive={pageNumber === pageActive}
             key={pageNumber}
-            onClick={() => onChangePageCustom(pageNumber)}
+            onClick={() => setPageActive(pageNumber)}
           >
             { pageNumber }
           </Styled.PageItem>
         ))}
       </Styled.PagesWrap>
 
-      {currentPage !== totalPages && (
-        <Styled.PageLast onClick={() => onChangePageCustom(totalPages)}>{ totalPages }</Styled.PageLast>
+      {pageActive !== totalPages && (
+        <Styled.PageLast onClick={() => setPageActive(totalPages)}>{ totalPages }</Styled.PageLast>
       )}
     </Styled.Pagination>
   )

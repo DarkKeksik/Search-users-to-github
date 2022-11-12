@@ -1,7 +1,10 @@
 # github-search-users 🏗️
 Service for looking users on GitHib<br />
 You can search for a user by login and see a list of his repositories.<br />
-**Without token, you can get no more than 1000 users!** (*You can set github access token for full query in input.*)
+**Without a token, you will be able to make fewer requests per minute!**
+(*You can set github access token for mores queries.*)
+
+PS You can get only 1000 users from request (!> 200 pages).
 
 ## Commands list yarn | npm or .etc 🤖 ##
 ```javascript

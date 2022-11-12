@@ -10,7 +10,7 @@ import * as Styled from './Input.styled'
  * @param idCustom          - Adding a attr id label and input
  * @param placeholderCustom - Adding a attr placeholder
  * @param anySideEffects    - Any side effects after changed input
- * @param debounceTimeout   - Timeout for debounce
+ * @param timeoutDebounce   - Timeout for debounce
  * @param inputType         - Attr type for input
  * @param labelStyled       - Custom styles for label
  * @param defaultValue      - Just default value for input

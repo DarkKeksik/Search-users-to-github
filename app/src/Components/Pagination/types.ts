@@ -2,5 +2,5 @@ export type PaginationProps = {
   totalElements: number
   currentPage: number
   stepRange: number
-  onChangePageCustom: any
+  onChangePage: (pageCurrent: number) => void
 }

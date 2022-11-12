@@ -37,15 +37,16 @@ export const PagesWrap = styled.div`
   display: flex;
   gap: .2rem;
 `
+
 export const PageItem = styled.a<{isActive?: boolean}>`
   ${ stylesPageItem };
-  ${({isActive}) => isActive && css`
-    border: 2px solid #ffffff00;
-    box-shadow: inset 1px 0 3px #575757;
-    background: none;
-  `}  
   color: ${({isActive}) => isActive && '#575757' || 'white'};
+  ${({isActive}) => isActive ?
+    css`background: none;`:
+    css`&:hover { box-shadow: inset 1px 0 3px #575757; }`
+  };
 `
+
 export const PageLast = styled.a`
   color: white;
   ${ stylesPageItem };

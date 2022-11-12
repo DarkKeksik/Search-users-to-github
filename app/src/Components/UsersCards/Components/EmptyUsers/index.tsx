@@ -11,10 +11,13 @@ const EmptyUsers: FC = () => {
         Try looking for other users.
       </Styled.Title>
       <Styled.Bold>
+        <Styled.SubTitle>
+          You can get only 1000 users from request, !{'>'}&nbsp;200 pages.
+        </Styled.SubTitle>
         Without a token, you will be able to make fewer requests per minute!
-        You can set github access token for full query.
+        You can set github access token for mores queries.
       </Styled.Bold>
-      <Styled.Link marginTop={'.3rem'} target='_blank' href={link}>Guide here</Styled.Link>
+      <Styled.Link target='_blank' href={link}>Guide here</Styled.Link>
     </Styled.EmptyUsers>
   )
 }
