@@ -6,7 +6,8 @@ import {
   setUsersToolkit,
   setTokenToolkit,
   setLoginSearch,
-  setPaginationCurrentPage
+  setPaginationCurrentPage,
+  setIsLoadingUsers
 } from '../../toolkitRedux/reducers/externalApi'
 import { setAccessTokenLS } from '../../utils/localstorage'
 import { Input } from '../'
@@ -37,10 +38,13 @@ const SearchUsers: FC = () => {
       return
     }
 
+    dispatch(setIsLoadingUsers(true))
     dispatch(setLoginSearch(value))
     dispatch(setPaginationCurrentPage(currentPage))
+
     await getUsersOctokit({page: currentPage, per_page: stepRange, q: value}, accessToken)
       .then(usersGithub => dispatch(setUsersToolkit(usersGithub.data)))
+      .finally(() => dispatch(setIsLoadingUsers(false)))
   }, [accessToken])
 
   const setToken = useCallback((value: string) => {

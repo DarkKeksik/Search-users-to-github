@@ -1,24 +1,24 @@
-import React, {FC, useCallback} from 'react'
+import React, { FC, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { getUsersOctokit } from '../../utils/oktokit'
-import { setPaginationCurrentPage, setUsersToolkit, setErrorGithub } from '../../toolkitRedux/reducers/externalApi'
-import { Pagination } from '../'
-import { EmptyUsers, Card } from './Components'
-import { GithubUserProps } from './types'
+import { setPaginationCurrentPage, setUsersToolkit, setErrorGithub, setIsLoadingUsers } from '../../toolkitRedux/reducers/externalApi'
+import { Pagination, Preloader } from '../'
+import { EmptyUsers, Card, NetworkError } from './Components'
+import { StoreProps } from './types'
 import * as Styled from './UserCard.styled'
-import NetworkError from "./Components/NetworkError";
 
 const Users: FC = () => {
   const dispatch = useDispatch()
 
   // Get data from users from API
-  const [users, total_count, errorGithub]: [[GithubUserProps], number, {[key: string]: string}] = useSelector(({
+  const [users, total_count, errorGithub, isLoadingUsers]: StoreProps = useSelector(({
     reducerExternalApi: {
       users: {total_count, items},
-      errorGithub
+      errorGithub,
+      isLoadingUsers
     }
-  }) => [items || [], total_count, errorGithub])
+  }) => [items || [], total_count, errorGithub, isLoadingUsers])
 
   // Get pagination data
   const [currentPage, stepRange]: [number, number] = useSelector(({
@@ -34,9 +34,11 @@ const Users: FC = () => {
     await getUsersOctokit({ page: currentPage, per_page: stepRange, q: searchLogin })
       .then(usersGithub => dispatch(setUsersToolkit(usersGithub.data)))
       .catch(errorData => dispatch(setErrorGithub(errorData)))
+      .finally(() => dispatch(setIsLoadingUsers(false)))
   }, [searchLogin, currentPage])
 
   const onChangePage = (pageCurrent: number) => {
+    dispatch(setIsLoadingUsers(true))
     dispatch(setPaginationCurrentPage(pageCurrent))
     setUsersForCurrentPage(pageCurrent)
   }
@@ -45,15 +47,16 @@ const Users: FC = () => {
     return <EmptyUsers />
   }
 
-  // @TODO need preloader
   return (
     <>
-      <Styled.Users>
-        { errorGithub && <NetworkError text={errorGithub.message} /> }
-        { users.map(({login, node_id, avatar_url, html_url}) => (
-          <Card key={node_id} name={login} avatarUrl={avatar_url} html_url={html_url} />
-        )) }
-      </Styled.Users>
+      <Preloader isLoading={isLoadingUsers}>
+        <Styled.Users>
+          { errorGithub && <NetworkError text={errorGithub.message} /> }
+          { users.map(({login, node_id, avatar_url, html_url}) => (
+            <Card key={node_id} name={login} avatarUrl={avatar_url} html_url={html_url} />
+          )) }
+        </Styled.Users>
+      </Preloader>
 
       {total_count > stepRange &&
         <Pagination

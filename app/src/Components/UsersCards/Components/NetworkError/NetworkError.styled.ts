@@ -10,7 +10,7 @@ export const NetworkError = styled.div`
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  background: #feebfee0;
+  background: #feebfe61;
 `
 
 export const Wrap = styled.div`
