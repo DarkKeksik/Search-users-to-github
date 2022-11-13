@@ -20,7 +20,9 @@ export const Avatar = styled.div<{src?: string}>`
   background-size: cover;
 `
 
-export const Name = styled.p``
+export const Name = styled.p`
+  overflow-wrap: break-word;
+`
 
 export const Button = styled.a`
   padding: 0.4rem 0.2rem;
