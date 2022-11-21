@@ -12,9 +12,15 @@ const Repositories = () => {
   return (
     <Styled.Repositories>
       <Slider {...sliderConfig}>
-        <div>Slide 1</div>
-        <div>Slide 2</div>
-        <div>Slide 3</div>
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
+        <div />
       </Slider>
     </Styled.Repositories>
   )

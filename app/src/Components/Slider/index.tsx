@@ -1,4 +1,4 @@
-import React, { FC, PropsWithChildren, useMemo } from 'react'
+import React, {FC, PropsWithChildren, useMemo, useState} from 'react'
 import * as Styled from './Slider.styled'
 import { SliderProps } from './types'
 
@@ -7,22 +7,33 @@ const Slider: FC<PropsWithChildren & SliderProps> = (props) => {
     children,
     cols,
     width,
+    slideCurrent = 1,
     ...sliderProps
   } = props
 
-  // @TODO Need to add a prop 'spacing' to the width and fix type
+  const [slideSelected, setSlideSelected] = useState(slideCurrent)
+
+  // @TODO Need to add a prop 'spacing' to the width and fix any type
   const slideSize: string = useMemo(() => {
     const [widthNumber, widthUnit] = width.match(/^[.]?\d+[.]?\d*|(\D+)/gi)
-    return (widthNumber / cols) + widthUnit
+    return (widthNumber as any / cols) + widthUnit
   }, [width, cols])
 
   return (
     <Styled.Slider width={width} { ...sliderProps }>
-        { React.Children.map(children, (child) =>
-          <Styled.Item size={slideSize}>
+      <Styled.AnimationWrap slideSize={slideSize} slideSelected={slideSelected}>
+        { React.Children.map(children, (child, key) =>
+          <Styled.Item
+            key={key}
+            slideId={key}
+            slideSize={slideSize}
+            slideSelected={slideSelected}
+            onClick={() => setSlideSelected(key)}
+          >
             { child }
           </Styled.Item>
         )}
+      </Styled.AnimationWrap>
     </Styled.Slider>
   )
 }
