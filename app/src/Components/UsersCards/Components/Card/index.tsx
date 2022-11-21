@@ -7,7 +7,7 @@ const Card: FC<GithubUserProps> = ({name, avatarUrl, html_url}) => (
   <Styled.Card>
     <Styled.Avatar src={avatarUrl} />
     <Styled.Name>{name}</Styled.Name>
-    <Styled.Button href={`${html_url}?tab=repositories`} target='__blank'>View repos</Styled.Button>
+    <Styled.Button href={`${html_url}?tab=repositories`} target='__blank'>repositories</Styled.Button>
   </Styled.Card>
 )
 
