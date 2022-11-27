@@ -1,20 +1,16 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { Preloader, Slider } from '../'
+import { Preloader } from '../'
 import { getRepositoriesByUserOctokit } from '../../utils/oktokit'
+import SliderOrCards from './components/SliderOrCards'
 import * as Styled from './Repositories.styled'
+import RepositoriesEmpty from "./components/RepositoriesEmpty";
 
 const Repositories = () => {
-  const [userRepositories, setUserRepositories] = useState<null | Array<any>>(null)
+  const [userRepositories, setUserRepositories] = useState<Array<any> | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const loginSelected: string = useSelector(({reducerExternalApi: {selectedLogin}}) => selectedLogin)
-
-  const sliderConfig = {
-    width: '35rem',
-    spacing: '0',
-    cols: 3
-  }
 
   useEffect(() => {
     setIsLoading(true)
@@ -29,24 +25,17 @@ const Repositories = () => {
     )
   }, [loginSelected])
 
-  if (!userRepositories) {
-    return (
-      <div>Make a request and click the "Repositories" button :З</div>
-    )
-  }
-
   return (
     <Styled.Repositories>
-      <Preloader isLoading={isLoading}>
-        <Slider {...sliderConfig}>
-          {userRepositories.map(({id, name, description}) => (
-            <Styled.Repository key={ id }>
-              <Styled.Title>{ name }</Styled.Title>
-              <Styled.Description>{ description || 'No description' }</Styled.Description>
-            </Styled.Repository>
-          ))}
-        </Slider>
-      </Preloader>
+      {!userRepositories ?
+        <div>You need to click the button in user card, after searching by login</div> :
+        <Preloader isLoading={isLoading}>
+          {userRepositories && !userRepositories.length ?
+            <RepositoriesEmpty /> :
+            <SliderOrCards userRepositories={userRepositories} />
+          }
+        </Preloader>
+      }
     </Styled.Repositories>
   )
 }

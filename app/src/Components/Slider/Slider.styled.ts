@@ -8,7 +8,7 @@ export const Slider = styled.section<SliderProps>`
   gap: ${({ spacing }) => spacing || '.625rem;' };
   max-width: ${({ width }) => width || '100%' };
   width: 100%;
-  padding-top: 2rem;
+  padding: 1.5rem 0;
   overflow: hidden;
 `
 
@@ -28,30 +28,31 @@ export const AnimationWrap = styled.div<SlideProps>`
  * @TODO calc should be moved to a function
  * */
 export const Item = styled.div<SlideProps>`
-  transform: rotate3d(0, 1, 0.1, ${
-    ({slideId, slideSelected}) => slideSelected && (
-      (slideId === (slideSelected - 1) && '50deg') ||
-        (slideId === (slideSelected + 1) && '-50deg')
-    ) || 0
-  }) scale(
+  transform: scale(
     ${({slideId, slideSelected}) =>
       (slideId === (slideSelected - 1)) ||
       (slideId === (slideSelected + 1)) ?
-        .95 : 1
+        .9 : 1
     }
-  ) translate(${({slideId, slideSelected}) =>
-      slideSelected && (
-        (slideId === (slideSelected - 1) && '2.5rem') || 
-        (slideId === (slideSelected + 1) && '-2.5rem')
-      ) || 0
-  }, ${({slideId, slideSelected}) => 
-      (slideId === (slideSelected - 1)) ||
-      (slideId === (slideSelected + 1)) ? 
-        '-1rem' : '0'
-  });
+  );
+  z-index: ${({slideId, slideSelected}) => 
+    (slideId === (slideSelected - 1)) && '0' ||
+    (slideId === slideSelected) && '1' ||
+    (slideId === (slideSelected + 1)) && '2'
+  };
+  opacity: ${({slideId, slideSelected}) => 
+    (slideId === (slideSelected - 1)) ||
+    (slideId === (slideSelected + 1)) ?
+    .5 : 1
+  };
+  
   flex: 0 0 ${({slideSize}) => slideSize ? css`calc(${slideSize})` : css`calc(6.25rem)`};
-  height: ${({slideSize}) => slideSize ? css`calc(${slideSize})` : css`calc(6.25rem)`};
+  min-height: ${({slideSize}) => slideSize ? css`calc(${slideSize} * 1.5)` : css`calc(6.25rem * 1.5)`};
   transition-duration: ${ animTime };
   background: white;
-  overflow-x: auto;
+  border-radius: 6px;
+  
+  &:hover {
+    z-index: 10;
+  }
 `

@@ -7,6 +7,5 @@ export const MainLayout = styled.div`
   width: 100%;
   margin: 0 auto;
   min-height: 100vh;
-  background: #feebfe;
   box-sizing: border-box;
 `
