@@ -7,16 +7,20 @@ export const Repositories = styled.section`
   padding: 1rem;
 `
 
-export const Slider = styled.section`
-  display: flex;
-  gap: .625rem;
-  max-width: 20rem;
-  width: 100%;
-  overflow: hidden;
+export const Repository = styled.div`
+  height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
 `
 
-export const Repository = styled.div`
-  flex: 0 0 6.25rem;
-  height: 6.25rem;
-  background: red;
+export const Title = styled.h4`
+  text-align: center;
+  padding: 0.5rem 0.5rem;
+  color: #242424;
+  font-size: 0.9rem;
+`
+
+export const Description = styled.p`
+  font-size: .8rem;
+  color: #242424;
 `

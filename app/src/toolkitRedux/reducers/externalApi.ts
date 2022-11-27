@@ -4,6 +4,7 @@ import { InitialStateProps } from '../types/externalApiTypes'
 
 const initialState: InitialStateProps = {
   searchLogin: '',
+  selectedLogin: '',
   users: [],
   isLoadingUsers: true,
   usersPaginationData: {
@@ -23,6 +24,9 @@ const reducerExternalApi = createSlice({
       state.searchLogin = action.payload
       state.usersPaginationData.currentPage = 1
     },
+    setLoginSelected(state, action) {
+      state.selectedLogin = action.payload
+    },
     setUsersToolkit(state, action) {
       state.users = action.payload
       state.errorGithub = null
@@ -39,6 +43,7 @@ const reducerExternalApi = createSlice({
     setIsLoadingUsers(state, action) {
       state.isLoadingUsers = action.payload
     }
+
   }
 })
 
@@ -49,6 +54,7 @@ export const {
   setTokenToolkit,
   setPaginationCurrentPage,
   setLoginSearch,
+  setLoginSelected,
   setErrorGithub,
   setIsLoadingUsers
 } = reducerExternalApi.actions

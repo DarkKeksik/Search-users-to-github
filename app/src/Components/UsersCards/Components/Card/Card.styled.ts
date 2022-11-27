@@ -5,7 +5,7 @@ const animTime = '.3s';
 
 export const Card = styled.div`
   display: grid;
-  grid-template-columns: 60px minmax(150px, 1fr) 120px;
+  grid-template-columns: 60px minmax(3.375rem, 1fr) 7.5rem;
   grid-gap: 0.5rem;
   align-items: center;
 `

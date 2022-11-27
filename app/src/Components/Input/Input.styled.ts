@@ -30,6 +30,7 @@ export const Input = styled.input`
   transition-duration: .5s;
   outline: none;
   color: #242424;
+  font-size: .8rem;
   
   &:hover {
     background: #ffffff;

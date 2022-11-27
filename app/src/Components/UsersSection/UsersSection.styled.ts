@@ -6,5 +6,5 @@ export const UsersSection = styled.section`
   gap: 1.5rem;
   padding: 3rem 1.5rem;
   background: #ffffffe8;
-  box-shadow: 4px 0 10px #0000005e;
+  box-shadow: 4px 0 10px #0000001c;
 `
