@@ -1,5 +1,6 @@
-import React, {FC, useCallback} from 'react'
+import React, { FC, useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
 
 import { getUsersOctokit } from '../../utils/oktokit'
 import {
@@ -13,15 +14,17 @@ import { setAccessTokenLS } from '../../utils/localstorage'
 import { Input } from '../'
 
 const SearchUsers: FC = () => {
-  const dispatch = useDispatch()
-  const accessToken: string = useSelector(({ reducerExternalApi: {accessToken} }) => accessToken)
-
   type PropsStore =  [
     currentPage: number,
     stepRange: number,
+    searchLogin: string
   ]
 
-  const [currentPage, stepRange]: PropsStore = useSelector(({
+  const dispatch = useDispatch()
+  let [searchParams, setSearchParams] = useSearchParams()
+  const accessToken: string = useSelector(({ reducerExternalApi: {accessToken} }) => accessToken)
+
+  const [currentPage, stepRange, searchLogin]: PropsStore = useSelector(({
     reducerExternalApi: {
       searchLogin,
       usersPaginationData: {
@@ -29,7 +32,7 @@ const SearchUsers: FC = () => {
         stepRange
       },
       errorGithub
-    }}) => [currentPage, stepRange]
+    }}) => [currentPage, stepRange, searchLogin]
   )
 
   const setUsers = useCallback(async (value: string) => {
@@ -45,12 +48,22 @@ const SearchUsers: FC = () => {
     await getUsersOctokit({page: currentPage, per_page: stepRange, q: value}, accessToken)
       .then(usersGithub => dispatch(setUsersToolkit(usersGithub.data)))
       .finally(() => dispatch(setIsLoadingUsers(false)))
+
+    // Change url after input change
+    // @TODO need put into a func or const url string
+    setSearchParams(`?login=${value}`)
   }, [accessToken])
 
   const setToken = useCallback((value: string) => {
     setAccessTokenLS(value)
     dispatch(setTokenToolkit(value))
   }, [])
+
+
+  useEffect(() => {
+    const loginFromUrl = searchParams.get('login')
+    dispatch(setLoginSearch(loginFromUrl))
+  }, [searchParams])
 
   return (
     <>
@@ -65,6 +78,7 @@ const SearchUsers: FC = () => {
             paddingBottom: '1rem'
           }
         }
+        defaultValue={searchLogin}
       />
       <Input
         placeholderCustom='Your github access token'

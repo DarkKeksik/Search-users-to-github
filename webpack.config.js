@@ -57,7 +57,7 @@ module.exports = {
   context: path.resolve(__dirname, './app'),
   mode: isDev ? 'development' : 'production',
   entry: {
-    main: './index.js'
+    main: './index.tsx'
   },
   output: {
     filename: isDev ? `[name].js` : `[name].[hash].js`,

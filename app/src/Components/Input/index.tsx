@@ -1,7 +1,6 @@
 import React, { FC, useState, useId, useEffect } from 'react'
 
 import { useDebounce } from '../../utils/hooks'
-import { isDefined } from '../../utils/commons'
 import { Props } from './types'
 import * as Styled from './Input.styled'
 
@@ -32,13 +31,10 @@ const Input: FC<Props> = ({
 
   useEffect(() => {
     setValue(defaultValue)
-  }, [])
+  }, [defaultValue])
 
-  // Without first rendering
   useEffect(() => {
-    if (isDefined(valueDebounced) && anySideEffects) {
-      anySideEffects(valueDebounced)
-    }
+    anySideEffects(valueDebounced)
   }, [valueDebounced])
 
   return (
