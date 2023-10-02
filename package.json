@@ -1,9 +1,12 @@
 {
+  "homepage": "http://DarkKeksik.github.io/Search-users-to-github/",
   "name": "github-search-users",
   "version": "1.0.0",
   "description": "Search users repositories to github",
   "main": "app/index.tsx",
   "scripts": {
+    "predeploy": "yarn buildProd",
+    "deploy": "gh-pages -d build",
     "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open",
     "buildDev": "cross-env NODE_ENV=development webpack --mode development",
     "buildProd": "cross-env NODE_ENV=production webpack --mode production"
@@ -37,6 +40,7 @@
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^7.0.3",
+    "gh-pages": "^6.0.0",
     "html-webpack-plugin": "^5.5.0",
     "webpack": "^5.74.0",
     "webpack-bundle-analyzer": "^4.6.1",
