@@ -21,4 +21,4 @@ node_modules/
 .idea/
 
 # compiled filtes
-dist/
+build/

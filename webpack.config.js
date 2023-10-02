@@ -2,7 +2,6 @@ const path = require('path')
 const HTMLWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const {CleanWebpackPlugin} = require('clean-webpack-plugin')
-const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer')
 
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
@@ -24,7 +23,9 @@ const babelLoaderConfig = presets => {
 }
 
 const getPlugins = isProd => {
-  let plugins = [
+  // if (isProd) plugins.push(new BundleAnalyzerPlugin())
+
+  return [
     new HTMLWebpackPlugin({
       template: './static/index.html',
       templateParameters: {
@@ -42,15 +43,11 @@ const getPlugins = isProd => {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
       patterns: [{
-        from: `./static/${ faviconName }`,
-        to: path.resolve(__dirname, './dist')
+        from: `./static/${faviconName}`,
+        to: path.resolve(__dirname, './build')
       }]
     })
   ]
-
-  if (isProd) plugins.push(new BundleAnalyzerPlugin())
-
-  return plugins
 }
 
 module.exports = {
@@ -61,7 +58,7 @@ module.exports = {
   },
   output: {
     filename: isDev ? `[name].js` : `[name].[hash].js`,
-    path: path.resolve(__dirname, './dist')
+    path: path.resolve(__dirname, './build')
   },
   resolve: {
     extensions: ['.js', '.ts', '.tsx', '.jsx'],
